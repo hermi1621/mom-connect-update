@@ -1,0 +1,55 @@
+.schedule-form{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:30px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+    box-shadow:0 10px 30px rgba(124,58,237,.15);
+
+}
+
+.schedule-form input,
+.schedule-form select,
+.schedule-form textarea{
+
+    padding:15px;
+
+    border-radius:15px;
+
+    border:1px solid #ddd;
+
+    font-size:15px;
+
+}
+
+.schedule-form textarea{
+
+    min-height:120px;
+
+}
+
+.schedule-form button{
+
+    background:#7c3aed;
+
+    color:white;
+
+    border:none;
+
+    padding:16px;
+
+    border-radius:20px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+}

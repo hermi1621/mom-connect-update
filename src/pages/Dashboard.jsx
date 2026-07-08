@@ -40,14 +40,14 @@ function Dashboard(){
 </a>
 
 
-                <button>
-                    👩‍⚕️ Experts
-                </button>
+                <a href="/experts">
+👩‍⚕️ Experts
+</a>
 
 
-                <button>
-                    👤 Profile
-                </button>
+                <a href="/profile">
+👤 Profile
+</a>
 
 
             </aside>

@@ -1,79 +1,92 @@
 .scheduling-page{
 
+  position:relative;
+
+    min-height:100vh;
+
     padding:40px;
 
-}
-
-
-.schedule-form{
-
-    background:white;
-
-    padding:30px;
-
-    border-radius:25px;
-
-    display:flex;
-
-    gap:15px;
-
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    overflow:hidden;
 
 }
 
+.scheduling-page h1{
 
+    color:#7c3aed;
 
-.schedule-form input{
-
-    padding:15px;
-
-    border-radius:15px;
-
-    border:1px solid #ddd;
+    margin-bottom:30px;
 
 }
-
-
-
-.schedule-form button{
-
-    background:#7c3aed;
-
-    color:white;
-
-    border:none;
-
-    border-radius:15px;
-
-    padding:15px 25px;
-
-}
-
-
 
 .schedule-list{
 
     margin-top:40px;
 
-    display:grid;
+}
 
-    grid-template-columns:
-    repeat(3,1fr);
+.schedule-info{
 
-    gap:20px;
+    background:#f8f2ff;
+
+    border-left:5px solid #7c3aed;
+
+    padding:15px;
+
+    border-radius:15px;
+
+    margin-bottom:20px;
 
 }
 
+.scheduling-page::before{
 
+    content:"";
 
+    position:absolute;
+
+    inset:0;
+
+    background-image:url("../assets/images/mothers/schedule-bg.jpg");
+
+    background-size:cover;
+
+    background-position:center;
+
+    background-repeat:no-repeat;
+
+    filter:blur(8px);
+
+    transform:scale(1.08);
+
+    z-index:-2;
+
+}
+.scheduling-content{
+
+    position:relative;
+
+    z-index:1;
+
+}
 .schedule-card{
 
-    background:white;
+    background:rgba(255,255,255,.75);
 
-    padding:25px;
+    backdrop-filter:blur(15px);
 
-    border-radius:25px;
+    border:1px solid rgba(255,255,255,.4);
 
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+.scheduling-page::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:rgba(255,255,255,.35);
+
+    z-index:-1;
 
 }

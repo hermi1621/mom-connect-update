@@ -1,0 +1,69 @@
+.experts-page{
+
+    padding:40px;
+
+}
+
+
+
+.experts-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:30px;
+
+    margin-top:40px;
+
+}
+
+
+
+.expert-card{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:30px;
+
+    text-align:center;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.08);
+
+}
+
+
+
+.expert-card img{
+
+    width:120px;
+
+    height:120px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+}
+
+
+
+.expert-card button{
+
+    margin-top:20px;
+
+    background:#7c3aed;
+
+    color:white;
+
+    border:none;
+
+    padding:15px 30px;
+
+    border-radius:25px;
+
+}

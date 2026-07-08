@@ -8,8 +8,8 @@ import HabitTracking from "../pages/HabitTracking";
 import Analytics from "../pages/Analytics";
 import Journal from "../pages/Journal";
 import Apps from "../pages/Apps";
-
-
+import Experts from "../pages/Experts";
+import Profile from "../pages/Profile";
 
 function AppRoutes(){
 
@@ -70,7 +70,21 @@ path="/apps"
 element={<Apps/>}
 
 />
+                  <Route
 
+path="/experts"
+
+element={<Experts/>}
+
+/>
+   
+   <Route
+
+path="/profile"
+
+element={<Profile/>}
+
+/>
 
             </Routes>
 

@@ -1,234 +1,292 @@
 import "../styles/scheduling.css";
 import { useState } from "react";
 
+import ScheduleForm from "../components/scheduling/ScheduleForm";
+import ScheduleCard from "../components/scheduling/ScheduleCard";
 
-function Scheduling(){
+function Scheduling() {
 
-    const [tasks,setTasks] = useState([]);
+    const [title, setTitle] = useState("");
+    const [category, setCategory] = useState("Health");
+    const [date, setDate] = useState("");
+    const [time, setTime] = useState("");
+    const [reminder, setReminder] = useState("15");
+    const [notes, setNotes] = useState("");
+    const [important, setImportant] = useState(false);
 
+    const [schedules, setSchedules] = useState([]);
 
-    const [form,setForm] = useState({
-
-        title:"",
-        date:"",
-        time:""
-
-    });
-
-
-
-    function addSchedule(e){
+    function addSchedule(e) {
 
         e.preventDefault();
 
+        if (!title || !date || !time) {
 
-        const exists = tasks.find(
-
-            task =>
-            task.date === form.date &&
-            task.time === form.time
-
-        );
-
-
-        if(exists){
-
-            alert(
-                "This schedule already exists!"
-            );
+            alert("Please fill all required fields.");
 
             return;
 
         }
 
+        const duplicate = schedules.find(
 
-        setTasks([
+            (item) =>
 
-            ...tasks,
+                item.date === date &&
 
-            {
-                ...form,
-                completed:false
-            }
+                item.time === time
 
-        ]);
-
-
-        setForm({
-
-            title:"",
-            date:"",
-            time:""
-
-        });
-
-
-    }
-
-
-
-    function deleteTask(index){
-
-        const updated =
-        tasks.filter(
-            (_,i)=>i!==index
         );
 
+        if (duplicate) {
 
-        setTasks(updated);
+            alert("A schedule already exists for this date and time.");
+
+            return;
+
+        }
+
+        const newSchedule = {
+
+            id: Date.now(),
+
+            title,
+
+            category,
+
+            date,
+
+            time,
+
+            reminder,
+
+            notes,
+
+            important,
+
+            completed: false
+
+        };
+
+        setSchedules([...schedules, newSchedule]);
+
+        setTitle("");
+        setCategory("Health");
+        setDate("");
+        setTime("");
+        setReminder("15");
+        setNotes("");
+        setImportant(false);
 
     }
 
+    function deleteSchedule(id) {
 
+        setSchedules(
 
-    return(
+            schedules.filter(
+
+                item => item.id !== id
+
+            )
+
+        );
+
+    }
+
+    function toggleComplete(id) {
+
+        setSchedules(
+
+            schedules.map(item =>
+
+                item.id === id
+
+                    ?
+
+                    {
+
+                        ...item,
+
+                        completed: !item.completed
+
+                    }
+
+                    :
+
+                    item
+
+            )
+
+        );
+
+    }
+
+    function countdown(scheduleDate, scheduleTime) {
+
+        const target = new Date(`${scheduleDate}T${scheduleTime}`);
+
+        const now = new Date();
+
+        const diff = target - now;
+
+        if (diff <= 0) {
+
+            return "Completed";
+
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+        const hours = Math.floor(
+
+            (diff % (1000 * 60 * 60 * 24))
+
+            /
+
+            (1000 * 60 * 60)
+
+        );
+
+        const minutes = Math.floor(
+
+            (diff % (1000 * 60 * 60))
+
+            /
+
+            (1000 * 60)
+
+        );
+
+        if (days > 0)
+
+            return `${days} day(s) left`;
+
+        if (hours > 0)
+
+            return `${hours} hour(s) left`;
+
+        return `${minutes} minute(s) left`;
+
+    }
+
+    return (
 
         <div className="scheduling-page">
 
+            <div className="scheduling-content">
 
-            <h1>
-                📅 My Schedule
-            </h1>
+                <h1>
 
+                    📅 Smart Scheduling
 
+                </h1>
 
-            <form
-            className="schedule-form"
-            onSubmit={addSchedule}
-            >
+                <ScheduleForm
 
+                    title={title}
+                    setTitle={setTitle}
 
-                <input
+                    category={category}
+                    setCategory={setCategory}
 
-                placeholder="Schedule title"
+                    date={date}
+                    setDate={setDate}
 
-                value={form.title}
+                    time={time}
+                    setTime={setTime}
 
-                onChange={
-                    e=>setForm({
+                    reminder={reminder}
+                    setReminder={setReminder}
 
-                        ...form,
+                    notes={notes}
+                    setNotes={setNotes}
 
-                        title:e.target.value
+                    important={important}
+                    setImportant={setImportant}
 
-                    })
-                }
-
-                />
-
-
-
-                <input
-
-                type="date"
-
-                value={form.date}
-
-                onChange={
-                    e=>setForm({
-
-                        ...form,
-
-                        date:e.target.value
-
-                    })
-                }
+                    addSchedule={addSchedule}
 
                 />
 
+                <div className="schedule-list">
 
+                    {
 
-                <input
+                        schedules.map(schedule => (
 
-                type="time"
+                            <div
 
-                value={form.time}
+                                key={schedule.id}
 
-                onChange={
-                    e=>setForm({
+                            >
 
-                        ...form,
+                                <ScheduleCard
 
-                        time:e.target.value
+                                    schedule={schedule}
 
-                    })
-                }
+                                    onDelete={deleteSchedule}
 
-                />
+                                    onComplete={toggleComplete}
 
+                                />
 
+                                <div className="schedule-info">
 
-                <button>
-                    Add Schedule
-                </button>
+                                    <p>
 
+                                        ⏳
 
-            </form>
+                                        {
 
+                                            countdown(
 
+                                                schedule.date,
 
-            <div className="schedule-list">
+                                                schedule.time
 
+                                            )
 
-            {
+                                        }
 
-                tasks.map((task,index)=>(
+                                    </p>
 
+                                    <p>
 
-                    <div
-                    className="schedule-card"
-                    key={index}
-                    >
+                                        Status :
 
+                                        {
 
-                        <h3>
-                            {task.title}
-                        </h3>
+                                            schedule.completed
 
+                                                ?
 
-                        <p>
-                            📅 {task.date}
-                        </p>
+                                                " ✅ Completed"
 
+                                                :
 
-                        <p>
-                            ⏰ {task.time}
-                        </p>
+                                                " 🟣 Upcoming"
 
+                                        }
 
+                                    </p>
 
-                        <input
-                        type="checkbox"
-                        />
+                                </div>
 
+                            </div>
 
-                        <button
-                        onClick={
-                            ()=>deleteTask(index)
-                        }
-                        >
+                        ))
 
-                            Delete
+                    }
 
-                        </button>
-
-
-                    </div>
-
-
-                ))
-
-            }
-
+                </div>
 
             </div>
-
 
         </div>
 
     );
 
 }
-
 
 export default Scheduling;
