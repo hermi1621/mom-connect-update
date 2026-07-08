@@ -2,12 +2,17 @@ import "../styles/habitTracking.css";
 import { useState } from "react";
 import HabitCalendar from "../components/dashboard/HabitCalendar";
 
+
 function HabitTracking(){
 
 
     const [habits,setHabits] = useState([]);
 
     const [habit,setHabit] = useState("");
+
+    const [selectedDate,setSelectedDate] = useState(new Date());
+
+    const [completedDays,setCompletedDays] = useState([]);
 
 
 
@@ -24,11 +29,8 @@ function HabitTracking(){
             ...habits,
 
             {
-
-                name:habit,
-
+                name: habit,
                 completed:false
-
             }
 
         ]);
@@ -43,7 +45,7 @@ function HabitTracking(){
     function toggleHabit(index){
 
 
-        const updated=[...habits];
+        const updated = [...habits];
 
 
         updated[index].completed =
@@ -52,43 +54,83 @@ function HabitTracking(){
 
         setHabits(updated);
 
-
     }
+
 
 
 
     function deleteHabit(index){
 
 
-        setHabits(
+        const updated = habits.filter(
 
-            habits.filter(
-                (_,i)=>i!==index
-            )
+            (_,i)=>i !== index
 
         );
+
+
+        setHabits(updated);
+
+    }
+
+
+
+
+    function completeDay(){
+
+
+        const day = selectedDate.toDateString();
+
+
+        if(!completedDays.includes(day)){
+
+
+            setCompletedDays([
+
+                ...completedDays,
+
+                day
+
+            ]);
+
+        }
 
 
     }
 
 
 
+
     return(
 
-        
+
         <div className="habit-page">
 
 
             <h1>
                 🔥 Habit Tracking
             </h1>
-            
-<HabitCalendar/>
+
+
+
+            <HabitCalendar
+
+            date={selectedDate}
+
+            setDate={setSelectedDate}
+
+            completedDays={completedDays}
+
+            />
+
 
 
             <form
+
             onSubmit={addHabit}
+
             className="habit-form"
+
             >
 
 
@@ -106,11 +148,14 @@ function HabitTracking(){
 
 
                 <button>
+
                     Add Habit
+
                 </button>
 
 
             </form>
+
 
 
 
@@ -119,61 +164,68 @@ function HabitTracking(){
 
             {
 
-            habits.map((item,index)=>(
+                habits.map((item,index)=>(
 
 
-                <div
-                className="habit-card"
-                key={index}
-                >
+                    <div
 
+                    className="habit-card"
 
-                    <input
-
-                    type="checkbox"
-
-                    checked={item.completed}
-
-                    onChange={
-                        ()=>toggleHabit(index)
-                    }
-
-                    />
-
-
-                    <span
-                    className={
-                    item.completed
-                    ?
-                    "completed"
-                    :
-                    ""
-                    }
-                    >
-
-                        {item.name}
-
-                    </span>
-
-
-
-                    <button
-
-                    onClick={
-                        ()=>deleteHabit(index)
-                    }
+                    key={index}
 
                     >
 
-                        Delete
 
-                    </button>
+                        <input
+
+                        type="checkbox"
+
+                        checked={item.completed}
+
+                        onChange={
+                            ()=>toggleHabit(index)
+                        }
+
+                        />
 
 
-                </div>
+
+                        <span
+
+                        className={
+                            item.completed
+                            ?
+                            "completed"
+                            :
+                            ""
+                        }
+
+                        >
+
+                            {item.name}
+
+                        </span>
 
 
-            ))
+
+                        <button
+
+                        onClick={
+                            ()=>deleteHabit(index)
+                        }
+
+                        >
+
+                            Delete
+
+                        </button>
+
+
+
+                    </div>
+
+
+                ))
 
             }
 
@@ -181,9 +233,27 @@ function HabitTracking(){
             </div>
 
 
+
+
+            <button
+
+            className="complete-day-btn"
+
+            onClick={completeDay}
+
+            >
+
+                Complete Day 🔥
+
+            </button>
+
+
+
         </div>
 
+
     );
+
 
 }
 

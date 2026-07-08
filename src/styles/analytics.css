@@ -1,0 +1,84 @@
+.analytics-page{
+
+    padding:40px;
+
+}
+
+
+
+.analytics-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:30px;
+
+}
+
+
+
+.analytics-card{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:30px;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.08);
+
+}
+
+
+
+.progress-bar{
+
+    height:20px;
+
+    background:#eee;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+}
+
+
+
+.progress-fill{
+
+    height:100%;
+
+    background:#7c3aed;
+
+}
+
+
+
+.statistics{
+
+    display:flex;
+
+    gap:30px;
+
+    margin-top:40px;
+
+}
+
+
+
+.statistics div{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:25px;
+
+    text-align:center;
+
+    width:200px;
+
+}

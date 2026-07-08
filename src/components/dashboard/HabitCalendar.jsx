@@ -1,12 +1,41 @@
 import Calendar from "react-calendar";
-import { useState } from "react";
-
 import "../../styles/habitCalendar.css";
 
 
-function HabitCalendar(){
+function HabitCalendar({
 
-    const [date,setDate] = useState(new Date());
+    date,
+    setDate,
+    completedDays
+
+}){
+
+
+    function tileContent({date}){
+
+
+        const day =
+        date.toDateString();
+
+
+        if(completedDays.includes(day)){
+
+
+            return(
+
+                <span>
+                    🔥
+                </span>
+
+            );
+
+        }
+
+
+        return null;
+
+    }
+
 
 
     return(
@@ -19,24 +48,16 @@ function HabitCalendar(){
             </h2>
 
 
+
             <Calendar
 
                 onChange={setDate}
 
                 value={date}
 
+                tileContent={tileContent}
+
             />
-
-
-            <p>
-
-                Selected Day:
-
-                {" "}
-
-                {date.toDateString()}
-
-            </p>
 
 
         </div>

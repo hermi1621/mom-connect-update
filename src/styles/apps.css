@@ -1,0 +1,65 @@
+.apps-page{
+
+    padding:40px;
+
+}
+
+
+
+.apps-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:30px;
+
+    margin-top:40px;
+
+}
+
+
+
+.app-card{
+
+    background:white;
+
+    padding:40px;
+
+    border-radius:30px;
+
+    text-align:center;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.08);
+
+}
+
+
+
+.app-icon{
+
+    font-size:50px;
+
+}
+
+
+
+.app-card a{
+
+    display:inline-block;
+
+    margin-top:20px;
+
+    background:#7c3aed;
+
+    color:white;
+
+    padding:12px 25px;
+
+    border-radius:20px;
+
+    text-decoration:none;
+
+}

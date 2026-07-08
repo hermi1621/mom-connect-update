@@ -1,0 +1,86 @@
+.journal-page{
+
+    padding:40px;
+
+}
+
+
+
+.journal-form{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:30px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+
+
+.journal-form input,
+.journal-form textarea{
+
+    padding:15px;
+
+    border-radius:15px;
+
+    border:1px solid #ddd;
+
+}
+
+
+
+.journal-form textarea{
+
+    min-height:200px;
+
+}
+
+
+
+.journal-form button{
+
+    background:#7c3aed;
+
+    color:white;
+
+    border:none;
+
+    padding:15px;
+
+    border-radius:20px;
+
+}
+
+
+
+.journal-list{
+
+    margin-top:40px;
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:20px;
+
+}
+
+
+
+.journal-card{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:25px;
+
+}

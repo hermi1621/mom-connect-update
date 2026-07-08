@@ -26,19 +26,18 @@ function Dashboard(){
 </a>
 
 
-                <button>
-                    📊 Analytics
-                </button>
+                <a href="/analytics">
+📊 Analytics
+</a>
+
+               <a href="/journal">
+📖 Journaling
+</a>
 
 
-                <button>
-                    📖 Journaling
-                </button>
-
-
-                <button>
-                    📱 Apps
-                </button>
+                <a href="/apps">
+📱 Apps
+</a>
 
 
                 <button>

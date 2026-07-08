@@ -5,6 +5,9 @@ import Signup from "../pages/Signup";
 import Dashboard from "../pages/Dashboard";
 import Scheduling from "../pages/Scheduling";
 import HabitTracking from "../pages/HabitTracking";
+import Analytics from "../pages/Analytics";
+import Journal from "../pages/Journal";
+import Apps from "../pages/Apps";
 
 
 
@@ -41,6 +44,33 @@ element={<Scheduling/>}
 path="/habit-tracking"
 element={<HabitTracking/>}
 />
+            
+
+            <Route
+
+path="/analytics"
+
+element={<Analytics/>}
+
+/>
+  
+
+  <Route
+
+path="/journal"
+
+element={<Journal/>}
+
+/>
+
+<Route
+
+path="/apps"
+
+element={<Apps/>}
+
+/>
+
 
             </Routes>
 
