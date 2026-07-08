@@ -1,8 +1,13 @@
 import "../styles/profile.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 function Profile(){
+
+
+const navigate = useNavigate();
+
 
 
 const avatars=[
@@ -16,13 +21,35 @@ const avatars=[
 ];
 
 
+
 const [avatar,setAvatar]=useState(
-avatars[0]
+    avatars[0]
 );
 
 
 
+const user = JSON.parse(
+    localStorage.getItem("user")
+);
+
+
+
+function logout(){
+
+
+    localStorage.removeItem("user");
+
+
+    navigate("/signup");
+
+
+}
+
+
+
+
 return(
+
 
 <div className="profile-page">
 
@@ -32,6 +59,14 @@ return(
 </h1>
 
 
+
+
+
+{
+
+user ?
+
+(
 
 <div className="profile-card">
 
@@ -47,13 +82,15 @@ alt="profile"
 
 
 <h2>
-Hermela
+{user.name}
 </h2>
 
 
+
 <p>
-hermela@gmail.com
+{user.email}
 </p>
+
 
 
 <p>
@@ -62,10 +99,13 @@ hermela@gmail.com
 
 
 
+
+
 <div className="avatar-options">
 
 
 {
+
 avatars.map((item,index)=>(
 
 
@@ -81,6 +121,7 @@ onClick={()=>setAvatar(item)}
 
 
 ))
+
 }
 
 
@@ -88,64 +129,68 @@ onClick={()=>setAvatar(item)}
 </div>
 
 
-</div>
 
+<button
 
+className="logout"
 
+onClick={logout}
 
-<div className="profile-stats">
-
-
-<div>
-
-<h2>
-🔥 7
-</h2>
-
-<p>
-Day Streak
-</p>
-
-</div>
-
-
-
-<div>
-
-<h2>
-25
-</h2>
-
-<p>
-Schedules
-</p>
-
-</div>
-
-
-
-<div>
-
-<h2>
-12
-</h2>
-
-<p>
-Journals
-</p>
-
-</div>
-
-
-
-</div>
-
-
-<button className="logout">
+>
 
 Logout
 
 </button>
+
+
+
+</div>
+
+)
+
+
+
+:
+
+(
+
+
+<div className="not-login">
+
+
+<h2>
+You are not logged in
+</h2>
+
+
+<p>
+Please create an account to continue.
+</p>
+
+
+
+<button
+
+onClick={()=>
+navigate("/signup")
+}
+
+>
+
+Go To Signup
+
+</button>
+
+
+</div>
+
+
+)
+
+
+}
+
+
 
 
 

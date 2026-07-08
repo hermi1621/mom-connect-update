@@ -1,13 +1,103 @@
 import "../styles/analytics.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 function Analytics(){
 
 
-    const [habitProgress] = useState(80);
+    const [completedTasks,setCompletedTasks] = useState(0);
 
-    const [scheduleProgress] = useState(70);
+    const [remainingTasks,setRemainingTasks] = useState(0);
+
+
+
+    function calculateAnalytics(){
+
+
+        const savedTasks = JSON.parse(
+            localStorage.getItem("habitTasks")
+        ) || [];
+
+
+
+        const completed = savedTasks.filter(
+            task => task.completed
+        ).length;
+
+
+
+        const remaining = savedTasks.filter(
+            task => !task.completed
+        ).length;
+
+
+
+        setCompletedTasks(completed);
+
+        setRemainingTasks(remaining);
+
+
+    }
+
+
+
+
+    useEffect(()=>{
+
+
+        calculateAnalytics();
+
+
+
+        window.addEventListener(
+            "storage",
+            calculateAnalytics
+        );
+
+
+
+        return ()=>{
+
+            window.removeEventListener(
+                "storage",
+                calculateAnalytics
+            );
+
+        };
+
+
+    },[]);
+
+
+
+
+
+    const totalTasks =
+    completedTasks + remainingTasks;
+
+
+
+    const completedPercent =
+    totalTasks === 0
+    ?
+    0
+    :
+    Math.round(
+        (completedTasks / totalTasks) * 100
+    );
+
+
+
+    const remainingPercent =
+    totalTasks === 0
+    ?
+    0
+    :
+    Math.round(
+        (remainingTasks / totalTasks) * 100
+    );
+
+
 
 
 
@@ -23,6 +113,7 @@ function Analytics(){
 
 
 
+
             <div className="analytics-grid">
 
 
@@ -31,35 +122,49 @@ function Analytics(){
 
 
                     <h2>
-                        🔥 Habit Tracking
+                        🔥 Completed Tasks
                     </h2>
 
 
-                    <div className="progress-bar">
+
+                    <div
+
+                    className="circle"
+
+                    style={{
+
+                        background:
+                        `conic-gradient(
+                            #22c55e 
+                            ${completedPercent}%,
+                            #e5e7eb 
+                            0
+                        )`
+
+                    }}
+
+                    >
 
 
-                        <div
+                        <span>
 
-                        className="progress-fill"
+                            {completedPercent}%
 
-                        style={{
-                            width:`${habitProgress}%`
-                        }}
-
-                        >
-
-                        </div>
+                        </span>
 
 
                     </div>
 
 
+
                     <p>
-                        {habitProgress}% Completed
+                        {completedTasks} Completed
                     </p>
 
 
                 </div>
+
+
 
 
 
@@ -68,40 +173,54 @@ function Analytics(){
 
 
                     <h2>
-                        📅 Scheduling
+                        ⏳ Remaining Tasks
                     </h2>
 
 
-                    <div className="progress-bar">
+
+                    <div
+
+                    className="circle"
+
+                    style={{
+
+                        background:
+                        `conic-gradient(
+                            #7c3aed 
+                            ${remainingPercent}%,
+                            #e5e7eb 
+                            0
+                        )`
+
+                    }}
+
+                    >
 
 
-                        <div
+                        <span>
 
-                        className="progress-fill"
+                            {remainingPercent}%
 
-                        style={{
-                            width:`${scheduleProgress}%`
-                        }}
-
-                        >
-
-                        </div>
+                        </span>
 
 
                     </div>
 
 
+
+
                     <p>
-                        {scheduleProgress}% Completed
+                        {remainingTasks} Remaining
                     </p>
+
 
 
                 </div>
 
 
 
-
             </div>
+
 
 
 
@@ -120,25 +239,27 @@ function Analytics(){
                     </p>
 
                     <strong>
-                        120
+                        {completedTasks}
                     </strong>
 
                 </div>
 
 
 
+
+
                 <div>
 
                     <h2>
-                        ❌
+                        📌
                     </h2>
 
                     <p>
-                        Missed Tasks
+                        Total Tasks
                     </p>
 
                     <strong>
-                        20
+                        {totalTasks}
                     </strong>
 
                 </div>
@@ -153,6 +274,7 @@ function Analytics(){
 
 
     );
+
 
 }
 

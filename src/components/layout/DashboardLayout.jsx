@@ -1,0 +1,32 @@
+import { Outlet } from "react-router-dom";
+import Sidebar from "./Sidebar";
+import "../../styles/layout.css";
+
+
+function DashboardLayout(){
+
+
+    return(
+
+        <div className="layout">
+
+
+            <Sidebar/>
+
+
+            <main className="content">
+
+                <Outlet/>
+
+            </main>
+
+
+        </div>
+
+    );
+
+
+}
+
+
+export default DashboardLayout;

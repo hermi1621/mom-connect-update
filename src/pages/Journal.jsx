@@ -1,17 +1,49 @@
 import "../styles/journal.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 function Journal(){
 
 
-    const [journals,setJournals] = useState([]);
+    const [journals,setJournals] = useState(()=>{
+
+        const saved =
+        localStorage.getItem("journals");
+
+        return saved
+        ?
+        JSON.parse(saved)
+        :
+        [];
+
+    });
+
+
 
     const [title,setTitle] = useState("");
 
     const [content,setContent] = useState("");
 
     const [password,setPassword] = useState("");
+
+
+
+    const [selectedJournal,setSelectedJournal] = useState(null);
+
+    const [unlockPassword,setUnlockPassword] = useState("");
+
+
+
+    useEffect(()=>{
+
+        localStorage.setItem(
+            "journals",
+            JSON.stringify(journals)
+        );
+
+    },[journals]);
+
+
 
 
 
@@ -34,6 +66,8 @@ function Journal(){
             content,
 
             password,
+
+            locked: password.length > 0,
 
             date:new Date().toLocaleDateString()
 
@@ -61,6 +95,8 @@ function Journal(){
 
 
 
+
+
     function deleteJournal(id){
 
 
@@ -80,7 +116,62 @@ function Journal(){
 
 
 
+
+
+    function unlockJournal(){
+
+
+        if(
+            unlockPassword === selectedJournal.password
+        ){
+
+
+            setJournals(
+
+                journals.map(item=>
+
+                    item.id === selectedJournal.id
+
+                    ?
+
+                    {
+                        ...item,
+                        locked:false
+                    }
+
+                    :
+
+                    item
+
+                )
+
+            );
+
+
+            setSelectedJournal(null);
+
+            setUnlockPassword("");
+
+
+        }
+
+        else{
+
+            alert("Incorrect password 🔒");
+
+        }
+
+
+    }
+
+
+
+
+
+
+
     return(
+
 
         <div className="journal-page">
 
@@ -88,6 +179,7 @@ function Journal(){
             <h1>
                 📖 My Journal
             </h1>
+
 
 
 
@@ -132,7 +224,7 @@ function Journal(){
 
                 type="password"
 
-                placeholder="Protect with password"
+                placeholder="Protect with password (optional)"
 
                 value={password}
 
@@ -156,7 +248,11 @@ function Journal(){
 
 
 
+
+
+
             <div className="journal-list">
+
 
 
             {
@@ -174,26 +270,74 @@ function Journal(){
 
 
                     <h2>
-                        {item.title}
+
+                    {
+
+                    item.locked
+
+                    ?
+
+                    "🔒 Locked Journal"
+
+                    :
+
+                    item.title
+
+                    }
+
                     </h2>
 
 
+
                     <small>
+
                         {item.date}
+
                     </small>
 
 
 
+
+                    {
+
+                    item.locked
+
+                    ?
+
+                    (
+
+                    <button
+
+                    onClick={()=>
+                        setSelectedJournal(item)
+                    }
+
+                    >
+
+                        Unlock 🔑
+
+                    </button>
+
+                    )
+
+                    :
+
+                    (
+
+                    <>
+
                     <p>
+
                         {item.content}
+
                     </p>
 
 
 
                     <button
 
-                    onClick={
-                        ()=>deleteJournal(item.id)
+                    onClick={()=>
+                        deleteJournal(item.id)
                     }
 
                     >
@@ -201,6 +345,14 @@ function Journal(){
                         Delete
 
                     </button>
+
+                    </>
+
+                    )
+
+
+                    }
+
 
 
                 </div>
@@ -215,7 +367,82 @@ function Journal(){
 
 
 
+
+
+
+
+
+            {
+
+            selectedJournal &&
+
+            (
+
+            <div className="unlock-box">
+
+
+                <div className="unlock-card">
+
+
+                    <h2>
+                        🔐 Unlock Journal
+                    </h2>
+
+
+                    <input
+
+                    type="password"
+
+                    placeholder="Enter password"
+
+                    value={unlockPassword}
+
+                    onChange={
+                        e=>setUnlockPassword(e.target.value)
+                    }
+
+                    />
+
+
+                    <button
+
+                    onClick={unlockJournal}
+
+                    >
+
+                        Open Journal
+
+                    </button>
+
+
+                    <button
+
+                    onClick={()=>{
+                        setSelectedJournal(null);
+                        setUnlockPassword("");
+                    }}
+
+                    >
+
+                        Cancel
+
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+            )
+
+
+            }
+
+
+
         </div>
+
 
     );
 
