@@ -1,4 +1,5 @@
 import "../../styles/hero.css";
+import heroImage from "../../assets/hero/fenty-hair.webp";
 import { FaArrowRight, FaPlay } from "react-icons/fa";
 
 function Hero() {
@@ -89,7 +90,11 @@ function Hero() {
 
                 <div className="hero-image">
 
-                    👩‍🍼
+                    
+    <img
+        src={heroImage}
+        alt="Mother using Moms Connect"
+    />
 
                 </div>
 

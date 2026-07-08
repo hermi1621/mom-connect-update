@@ -142,13 +142,17 @@
 
 .hero-image{
 
-    width:420px;
+    width:520px;
 
-    height:420px;
-
-    background:white;
+    height:520px;
 
     border-radius:50%;
+
+    background:linear-gradient(
+        135deg,
+        #F3E8FF,
+        #DDD6FE
+    );
 
     display:flex;
 
@@ -156,8 +160,22 @@
 
     align-items:center;
 
-    font-size:180px;
+    overflow:hidden;
 
-    box-shadow:0 25px 60px rgba(124,58,237,.15);
+    box-shadow:
+    0 25px 60px rgba(124,58,237,.15);
+
+}
+
+
+.hero-image img{
+
+    width:90%;
+
+    height:90%;
+
+    object-fit:cover;
+
+    border-radius:50%;
 
 }
