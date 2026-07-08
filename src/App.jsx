@@ -1,6 +1,9 @@
 import AppRoutes from "./routes/AppRoutes";
 
 
+
+
+
 function App(){
 
     return(
@@ -8,6 +11,8 @@ function App(){
         <AppRoutes/>
 
     );
+
+ 
 
 }
 

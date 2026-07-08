@@ -1,0 +1,97 @@
+.habit-page{
+
+    padding:40px;
+
+}
+
+
+
+.habit-form{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:25px;
+
+    display:flex;
+
+    gap:15px;
+
+}
+
+
+
+.habit-form input{
+
+    flex:1;
+
+    padding:15px;
+
+    border-radius:15px;
+
+    border:1px solid #ddd;
+
+}
+
+
+
+.habit-form button{
+
+    background:#7c3aed;
+
+    color:white;
+
+    border:none;
+
+    padding:15px 30px;
+
+    border-radius:15px;
+
+}
+
+
+
+.habit-list{
+
+    margin-top:40px;
+
+}
+
+
+
+.habit-card{
+
+    background:white;
+
+    margin-bottom:15px;
+
+    padding:20px;
+
+    border-radius:20px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+
+
+.habit-card span{
+
+    flex:1;
+
+}
+
+
+
+.completed{
+
+    text-decoration:line-through;
+
+    opacity:.5;
+
+}

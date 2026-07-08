@@ -1,0 +1,50 @@
+.habit-calendar{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:30px;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.08);
+
+}
+
+
+
+.habit-calendar h2{
+
+    color:#7c3aed;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.react-calendar{
+
+    border:none;
+
+    width:100%;
+
+}
+
+
+
+.react-calendar button{
+
+    border-radius:10px;
+
+}
+
+
+
+.react-calendar__tile--active{
+
+    background:#7c3aed;
+
+    color:white;
+
+}

@@ -1,0 +1,79 @@
+.scheduling-page{
+
+    padding:40px;
+
+}
+
+
+.schedule-form{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:25px;
+
+    display:flex;
+
+    gap:15px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+}
+
+
+
+.schedule-form input{
+
+    padding:15px;
+
+    border-radius:15px;
+
+    border:1px solid #ddd;
+
+}
+
+
+
+.schedule-form button{
+
+    background:#7c3aed;
+
+    color:white;
+
+    border:none;
+
+    border-radius:15px;
+
+    padding:15px 25px;
+
+}
+
+
+
+.schedule-list{
+
+    margin-top:40px;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:20px;
+
+}
+
+
+
+.schedule-card{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:25px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+}
