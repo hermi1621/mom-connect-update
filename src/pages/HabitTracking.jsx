@@ -1,213 +1,504 @@
 import "../styles/habitTracking.css";
-import { useState, useEffect } from "react";
-import HabitCalendar from "../components/dashboard/HabitCalendar";
 
-function HabitTracking() {
+import { useEffect, useState } from "react";
 
-    const [habit, setHabit] = useState("");
+import API from "../services/api";
 
-    const [selectedDate, setSelectedDate] = useState(null);
 
-    const [habits, setHabits] = useState(() => {
-        const saved = localStorage.getItem("habitTasks");
-        return saved ? JSON.parse(saved) : [];
-    });
 
-    const [completedDays, setCompletedDays] = useState(() => {
-        const saved = localStorage.getItem("completedDays");
-        return saved ? JSON.parse(saved) : [];
-    });
+function HabitTracking(){
 
-    useEffect(() => {
-        localStorage.setItem("habitTasks", JSON.stringify(habits));
-    }, [habits]);
 
-    useEffect(() => {
-        localStorage.setItem("completedDays", JSON.stringify(completedDays));
-    }, [completedDays]);
+    const [habits,setHabits] = useState([]);
 
-    function addHabit(e) {
+
+    const [name,setName] = useState("");
+
+    const [description,setDescription] = useState("");
+
+    const [frequency,setFrequency] = useState("Daily");
+
+
+
+
+
+    // GET HABITS FROM DATABASE
+
+    async function loadHabits(){
+
+
+        try{
+
+
+            const response = await API.get(
+
+                "/habits"
+
+            );
+
+
+            setHabits(response.data);
+
+
+        }
+
+
+        catch(error){
+
+
+            console.log(error);
+
+
+        }
+
+
+    }
+
+
+
+
+
+
+
+    useEffect(()=>{
+
+
+        loadHabits();
+
+
+    },[]);
+
+
+
+
+
+
+
+
+
+    // ADD HABIT
+
+    async function addHabit(e){
+
 
         e.preventDefault();
 
-        if (!selectedDate) {
-            alert("Please select a date first.");
+
+
+        if(!name){
+
+
+            alert("Enter habit name");
+
             return;
-        }
-
-        if (!habit.trim()) return;
-
-        setHabits([
-            ...habits,
-            {
-                id: Date.now(),
-                name: habit,
-                completed: false,
-                date: selectedDate.toDateString()
-            }
-        ]);
-
-        setHabit("");
-
-    }
-
-    function toggleHabit(id) {
-
-        setHabits(
-            habits.map((item) =>
-                item.id === id
-                    ? { ...item, completed: !item.completed }
-                    : item
-            )
-        );
-
-    }
-
-    function deleteHabit(id) {
-
-        setHabits(
-            habits.filter((item) => item.id !== id)
-        );
-
-    }
-
-    function completeDay() {
-
-        if (!selectedDate) return;
-
-        const day = selectedDate.toDateString();
-
-        if (!completedDays.includes(day)) {
-
-            setCompletedDays([
-                ...completedDays,
-                day
-            ]);
 
         }
 
+
+
+        try{
+
+
+            await API.post(
+
+                "/habits",
+
+                {
+
+                    name,
+
+                    description,
+
+                    frequency
+
+                }
+
+            );
+
+
+
+            loadHabits();
+
+
+
+            setName("");
+
+            setDescription("");
+
+            setFrequency("Daily");
+
+
+
+        }
+
+
+        catch(error){
+
+
+            console.log(error);
+
+
+            alert("Failed to add habit");
+
+
+        }
+
+
     }
 
-    const todayHabits = selectedDate
-        ? habits.filter(
-            (item) => item.date === selectedDate.toDateString()
-        )
-        : [];
 
-    return (
+
+
+
+
+
+
+
+    // CHECK / UNCHECK HABIT
+
+    async function completeHabit(id){
+
+
+        try{
+
+
+            await API.put(
+
+                `/habits/${id}/complete`
+
+            );
+
+
+
+            loadHabits();
+
+
+
+        }
+
+
+        catch(error){
+
+
+            console.log(error);
+
+
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+
+    // DELETE HABIT
+
+    async function deleteHabit(id){
+
+
+        try{
+
+
+            await API.delete(
+
+                `/habits/${id}`
+
+            );
+
+
+
+            loadHabits();
+
+
+
+        }
+
+
+        catch(error){
+
+
+            console.log(error);
+
+
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+
+    return(
+
 
         <div className="habit-page">
 
-            <h1>🔥 Habit Tracking</h1>
 
-            <HabitCalendar
-                date={selectedDate}
-                setDate={setSelectedDate}
-                completedDays={completedDays}
-            />
 
-            {!selectedDate && (
-                <p className="select-message">
-                    📅 Select a day from the calendar to start adding habits.
-                </p>
-            )}
+            <h1>
 
-            {selectedDate && (
+                🔥 Habit Tracking
 
-                <div className="selected-date">
+            </h1>
 
-                    <h2>
-                        {selectedDate.toLocaleDateString("en-US", {
-                            weekday: "long",
-                            day: "numeric",
-                            month: "long",
-                            year: "numeric"
-                        })}
-                    </h2>
 
-                </div>
 
-            )}
 
-            <form
-                onSubmit={addHabit}
-                className="habit-form"
-            >
+
+
+
+            <form onSubmit={addHabit}>
+
 
                 <input
-                    placeholder={
-                        selectedDate
-                            ? "Write your habit..."
-                            : "Select a date first"
+
+                    type="text"
+
+                    placeholder="Habit name"
+
+                    value={name}
+
+                    onChange={(e)=>
+
+                        setName(e.target.value)
+
                     }
-                    value={habit}
-                    onChange={(e) => setHabit(e.target.value)}
-                    disabled={!selectedDate}
+
                 />
 
-                <button disabled={!selectedDate}>
+
+
+
+
+                <input
+
+                    type="text"
+
+                    placeholder="Description"
+
+                    value={description}
+
+                    onChange={(e)=>
+
+                        setDescription(e.target.value)
+
+                    }
+
+                />
+
+
+
+
+
+
+
+                <select
+
+                    value={frequency}
+
+                    onChange={(e)=>
+
+                        setFrequency(e.target.value)
+
+                    }
+
+                >
+
+
+                    <option value="Daily">
+
+                        Daily
+
+                    </option>
+
+
+                    <option value="Weekly">
+
+                        Weekly
+
+                    </option>
+
+
+                    <option value="Monthly">
+
+                        Monthly
+
+                    </option>
+
+
+                </select>
+
+
+
+
+
+
+                <button type="submit">
+
                     Add Habit
+
                 </button>
+
+
 
             </form>
 
+
+
+
+
+
+
+
+
             <div className="habit-list">
 
-                {selectedDate && todayHabits.length === 0 && (
 
-                    <p className="empty-task">
-                        No habits for this date.
-                    </p>
 
-                )}
+                {
 
-                {todayHabits.map((item) => (
+                    habits.map((habit)=>(
 
-                    <div
-                        className="habit-card"
-                        key={item.id}
-                    >
 
-                        <input
-                            type="checkbox"
-                            checked={item.completed}
-                            onChange={() => toggleHabit(item.id)}
-                        />
+                        <div
 
-                        <span
-                            className={
-                                item.completed
-                                    ? "completed"
-                                    : ""
-                            }
+                            className="habit-card"
+
+                            key={habit.id}
+
                         >
-                            {item.name}
-                        </span>
 
-                        <button
-                            onClick={() => deleteHabit(item.id)}
-                        >
-                            Delete
-                        </button>
 
-                    </div>
 
-                ))}
+
+
+                            <h2>
+
+                                {habit.name}
+
+                            </h2>
+
+
+
+
+
+                            <p>
+
+                                {habit.description}
+
+                            </p>
+
+
+
+
+
+                            <p>
+
+                                Frequency:
+
+                                {" "}
+
+                                {habit.frequency}
+
+                            </p>
+
+
+
+
+
+
+
+
+
+                            <label>
+
+
+                                <input
+
+                                    type="checkbox"
+
+                                    checked={habit.completed}
+
+                                    onChange={()=>completeHabit(habit.id)}
+
+                                />
+
+
+
+                                {
+
+                                    habit.completed
+
+                                    ?
+
+                                    " Completed ✅"
+
+                                    :
+
+                                    " Mark Complete"
+
+                                }
+
+
+
+                            </label>
+
+
+
+
+
+
+
+
+
+                            <button
+
+                                onClick={()=>deleteHabit(habit.id)}
+
+                            >
+
+                                Delete
+
+                            </button>
+
+
+
+
+
+
+                        </div>
+
+
+                    ))
+
+                }
+
+
 
             </div>
 
-            <button
-                className="complete-day-btn"
-                onClick={completeDay}
-                disabled={!selectedDate}
-            >
-                Complete Day 🔥
-            </button>
+
+
+
 
         </div>
 
+
     );
 
+
 }
+
+
 
 export default HabitTracking;

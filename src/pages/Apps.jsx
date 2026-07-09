@@ -1,24 +1,24 @@
 import "../styles/apps.css";
 
 
-const apps=[
+const apps = [
 
     {
-        name:"Instagram",
-        icon:"📸",
-        link:"https://instagram.com"
+        name: "Instagram",
+        icon: "📸",
+        link: "https://instagram.com"
     },
 
     {
-        name:"TikTok",
-        icon:"🎵",
-        link:"https://tiktok.com"
+        name: "TikTok",
+        icon: "🎵",
+        link: "https://tiktok.com"
     },
 
     {
-        name:"Telegram",
-        icon:"✈️",
-        link:"https://telegram.org"
+        name: "Telegram",
+        icon: "✈️",
+        link: "https://telegram.org"
     }
 
 ];
@@ -42,7 +42,8 @@ function Apps(){
             <div className="apps-grid">
 
 
-            {
+                {
+
                 apps.map((app,index)=>(
 
 
@@ -55,11 +56,13 @@ function Apps(){
                     >
 
 
+
                         <div className="app-icon">
 
                             {app.icon}
 
                         </div>
+
 
 
                         <h2>
@@ -70,11 +73,14 @@ function Apps(){
 
 
 
+
                         <a
 
                         href={app.link}
 
                         target="_blank"
+
+                        rel="noopener noreferrer"
 
                         >
 
@@ -83,14 +89,17 @@ function Apps(){
                         </a>
 
 
+
                     </div>
 
 
                 ))
-            }
+
+                }
 
 
             </div>
+
 
 
         </div>

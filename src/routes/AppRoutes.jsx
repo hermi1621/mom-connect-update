@@ -10,6 +10,10 @@ import Journal from "../pages/Journal";
 import Apps from "../pages/Apps";
 import Experts from "../pages/Experts";
 import Profile from "../pages/Profile";
+import Login from "../pages/Login";
+
+import ProtectedRoute from "../components/auth/ProtectedRoute";
+
 
 function AppRoutes(){
 
@@ -17,76 +21,188 @@ function AppRoutes(){
 
         <BrowserRouter>
 
+
             <Routes>
 
 
+                {/* Public Pages */}
+
+
                 <Route
-                    path="/"
-                    element={<Home/>}
+
+                path="/"
+
+                element={<Home/>}
+
                 />
 
 
                 <Route
-                    path="/signup"
-                    element={<Signup/>}
+
+                path="/signup"
+
+                element={<Signup/>}
+
                 />
-                 
-                  <Route
+
+
+                <Route
+
+                path="/login"
+
+                element={<Login/>}
+
+                />
+
+
+
+
+                {/* Protected Pages */}
+
+
+                <Route
+
                 path="/dashboard"
-                element={<Dashboard/>}
+
+                element={
+
+                    <ProtectedRoute>
+
+                        <Dashboard/>
+
+                    </ProtectedRoute>
+
+                }
+
                 />
 
+
                 <Route
-path="/scheduling"
-element={<Scheduling/>}
-/>
-      <Route
-path="/habit-tracking"
-element={<HabitTracking/>}
-/>
-            
 
-            <Route
+                path="/scheduling"
 
-path="/analytics"
+                element={
 
-element={<Analytics/>}
+                    <ProtectedRoute>
 
-/>
-  
+                        <Scheduling/>
 
-  <Route
+                    </ProtectedRoute>
 
-path="/journal"
+                }
 
-element={<Journal/>}
+                />
 
-/>
 
-<Route
+                <Route
 
-path="/apps"
+                path="/habit-tracking"
 
-element={<Apps/>}
+                element={
 
-/>
-                  <Route
+                    <ProtectedRoute>
 
-path="/experts"
+                        <HabitTracking/>
 
-element={<Experts/>}
+                    </ProtectedRoute>
 
-/>
-   
-   <Route
+                }
 
-path="/profile"
+                />
 
-element={<Profile/>}
 
-/>
+
+                <Route
+
+                path="/analytics"
+
+                element={
+
+                    <ProtectedRoute>
+
+                        <Analytics/>
+
+                    </ProtectedRoute>
+
+                }
+
+                />
+
+
+
+                <Route
+
+                path="/journal"
+
+                element={
+
+                    <ProtectedRoute>
+
+                        <Journal/>
+
+                    </ProtectedRoute>
+
+                }
+
+                />
+
+
+
+                <Route
+
+                path="/apps"
+
+                element={
+
+                    <ProtectedRoute>
+
+                        <Apps/>
+
+                    </ProtectedRoute>
+
+                }
+
+                />
+
+
+
+                <Route
+
+                path="/experts"
+
+                element={
+
+                    <ProtectedRoute>
+
+                        <Experts/>
+
+                    </ProtectedRoute>
+
+                }
+
+                />
+
+
+
+                <Route
+
+                path="/profile"
+
+                element={
+
+                    <ProtectedRoute>
+
+                        <Profile/>
+
+                    </ProtectedRoute>
+
+                }
+
+                />
+
 
             </Routes>
+
 
         </BrowserRouter>
 

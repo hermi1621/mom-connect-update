@@ -1,43 +1,32 @@
 import "../styles/analytics.css";
+
 import { useEffect, useState } from "react";
+
+import API from "../services/api";
+
+import {
+    CircularProgressbar,
+    buildStyles
+} from "react-circular-progressbar";
+
+import "react-circular-progressbar/dist/styles.css";
+
 
 
 function Analytics(){
 
 
-    const [completedTasks,setCompletedTasks] = useState(0);
+    const [total,setTotal] = useState(0);
 
-    const [remainingTasks,setRemainingTasks] = useState(0);
+    const [completed,setCompleted] = useState(0);
 
+    const [remaining,setRemaining] = useState(0);
 
+    const [completedPercent,setCompletedPercent] = useState(0);
 
-    function calculateAnalytics(){
-
-
-        const savedTasks = JSON.parse(
-            localStorage.getItem("habitTasks")
-        ) || [];
+    const [remainingPercent,setRemainingPercent] = useState(0);
 
 
-
-        const completed = savedTasks.filter(
-            task => task.completed
-        ).length;
-
-
-
-        const remaining = savedTasks.filter(
-            task => !task.completed
-        ).length;
-
-
-
-        setCompletedTasks(completed);
-
-        setRemainingTasks(remaining);
-
-
-    }
 
 
 
@@ -45,25 +34,7 @@ function Analytics(){
     useEffect(()=>{
 
 
-        calculateAnalytics();
-
-
-
-        window.addEventListener(
-            "storage",
-            calculateAnalytics
-        );
-
-
-
-        return ()=>{
-
-            window.removeEventListener(
-                "storage",
-                calculateAnalytics
-            );
-
-        };
+        getHabitData();
 
 
     },[]);
@@ -72,30 +43,116 @@ function Analytics(){
 
 
 
-    const totalTasks =
-    completedTasks + remainingTasks;
+
+    async function getHabitData(){
+
+
+        try{
+
+
+            const response = await API.get(
+
+                "/habits"
+
+            );
 
 
 
-    const completedPercent =
-    totalTasks === 0
-    ?
-    0
-    :
-    Math.round(
-        (completedTasks / totalTasks) * 100
-    );
+            const habits = response.data;
 
 
 
-    const remainingPercent =
-    totalTasks === 0
-    ?
-    0
-    :
-    Math.round(
-        (remainingTasks / totalTasks) * 100
-    );
+
+
+            const totalHabits = habits.length;
+
+
+
+            const completedHabits = habits.filter(
+
+                habit => habit.completed === true
+
+            ).length;
+
+
+
+
+
+            const remainingHabits =
+
+                totalHabits - completedHabits;
+
+
+
+
+
+
+
+            const completePercentage = totalHabits
+
+            ?
+
+            Math.round(
+
+                (completedHabits / totalHabits) * 100
+
+            )
+
+            :
+
+            0;
+
+
+
+
+
+            const remainingPercentage = totalHabits
+
+            ?
+
+            Math.round(
+
+                (remainingHabits / totalHabits) * 100
+
+            )
+
+            :
+
+            0;
+
+
+
+
+
+
+
+            setTotal(totalHabits);
+
+            setCompleted(completedHabits);
+
+            setRemaining(remainingHabits);
+
+            setCompletedPercent(completePercentage);
+
+            setRemainingPercent(remainingPercentage);
+
+
+
+        }
+
+
+        catch(error){
+
+
+            console.log(error);
+
+
+        }
+
+
+    }
+
+
 
 
 
@@ -107,115 +164,42 @@ function Analytics(){
         <div className="analytics-page">
 
 
+
             <h1>
-                📊 Your Analytics
+
+                📊 Habit Analytics
+
             </h1>
 
 
 
 
-            <div className="analytics-grid">
+
+            <div className="analytics-summary">
 
 
 
-                <div className="analytics-card">
+                <h2>
 
+                    Total Habits: {total}
 
-                    <h2>
-                        🔥 Completed Tasks
-                    </h2>
-
-
-
-                    <div
-
-                    className="circle"
-
-                    style={{
-
-                        background:
-                        `conic-gradient(
-                            #22c55e 
-                            ${completedPercent}%,
-                            #e5e7eb 
-                            0
-                        )`
-
-                    }}
-
-                    >
-
-
-                        <span>
-
-                            {completedPercent}%
-
-                        </span>
-
-
-                    </div>
+                </h2>
 
 
 
-                    <p>
-                        {completedTasks} Completed
-                    </p>
+                <h3>
 
+                    ✅ Completed: {completed}
 
-                </div>
-
-
+                </h3>
 
 
 
+                <h3>
 
-                <div className="analytics-card">
+                    ⏳ Remaining: {remaining}
 
-
-                    <h2>
-                        ⏳ Remaining Tasks
-                    </h2>
-
-
-
-                    <div
-
-                    className="circle"
-
-                    style={{
-
-                        background:
-                        `conic-gradient(
-                            #7c3aed 
-                            ${remainingPercent}%,
-                            #e5e7eb 
-                            0
-                        )`
-
-                    }}
-
-                    >
-
-
-                        <span>
-
-                            {remainingPercent}%
-
-                        </span>
-
-
-                    </div>
-
-
-
-
-                    <p>
-                        {remainingTasks} Remaining
-                    </p>
-
-
-
-                </div>
+                </h3>
 
 
 
@@ -225,22 +209,37 @@ function Analytics(){
 
 
 
-            <div className="statistics">
 
 
-                <div>
+            <div className="circle-container">
+
+
+
+                <div className="circle-card">
+
 
                     <h2>
-                        ✅
+
+                        Completed
+
                     </h2>
 
-                    <p>
-                        Completed Tasks
-                    </p>
 
-                    <strong>
-                        {completedTasks}
-                    </strong>
+
+                    <CircularProgressbar
+
+                        value={completedPercent}
+
+                        text={`${completedPercent}%`}
+
+                        styles={buildStyles({
+
+                            textSize:"20px"
+
+                        })}
+
+                    />
+
 
                 </div>
 
@@ -248,25 +247,82 @@ function Analytics(){
 
 
 
-                <div>
+
+
+
+                <div className="circle-card">
+
 
                     <h2>
-                        📌
+
+                        Not Completed
+
                     </h2>
 
-                    <p>
-                        Total Tasks
-                    </p>
 
-                    <strong>
-                        {totalTasks}
-                    </strong>
+
+                    <CircularProgressbar
+
+                        value={remainingPercent}
+
+                        text={`${remainingPercent}%`}
+
+                        styles={buildStyles({
+
+                            textSize:"20px"
+
+                        })}
+
+                    />
+
 
                 </div>
+
 
 
 
             </div>
+
+
+
+
+
+
+
+            {
+
+                completedPercent === 100 && total > 0 && (
+
+
+                    <div className="celebration">
+
+
+                        🎉🥳🏆
+
+
+                        <h1>
+
+                            Perfect!
+
+                        </h1>
+
+
+                        <p>
+
+                            You completed all habits!
+
+                        </p>
+
+
+
+                    </div>
+
+
+                )
+
+            }
+
+
 
 
 
@@ -275,8 +331,8 @@ function Analytics(){
 
     );
 
-
 }
+
 
 
 export default Analytics;

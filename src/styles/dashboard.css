@@ -105,3 +105,35 @@
     border-radius:25px;
 
 }
+
+.user-mini-profile{
+
+    text-align:center;
+
+    margin-bottom:25px;
+
+}
+
+
+.user-mini-profile img{
+
+    width:80px;
+
+    height:80px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:3px solid #7c3aed;
+
+}
+
+
+.user-mini-profile h3{
+
+    color:white;
+
+    margin-top:10px;
+
+}

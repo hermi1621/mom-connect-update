@@ -1,54 +1,154 @@
 import "../styles/scheduling.css";
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 
 import ScheduleForm from "../components/scheduling/ScheduleForm";
 import ScheduleCard from "../components/scheduling/ScheduleCard";
 
+import API from "../services/api";
+import {checkNotifications} from "../utils/notification";
+
 function Scheduling() {
 
+
     const [title, setTitle] = useState("");
+
     const [category, setCategory] = useState("Health");
+
     const [date, setDate] = useState("");
+
     const [time, setTime] = useState("");
+
     const [reminder, setReminder] = useState("15");
+
     const [notes, setNotes] = useState("");
+
     const [important, setImportant] = useState(false);
+
 
     const [schedules, setSchedules] = useState([]);
 
-    function addSchedule(e) {
+
+
+
+
+    // GET ALL SCHEDULES
+
+    async function loadSchedules(){
+
+
+        try{
+
+
+            const response = await API.get(
+
+                "/schedules"
+
+            );
+
+
+            setSchedules(response.data);
+
+
+        }
+
+
+        catch(error){
+
+
+            console.log(error);
+
+
+        }
+
+
+    }
+
+
+
+
+useEffect(()=>{
+
+
+    loadSchedules();
+
+
+    const timer=setInterval(()=>{
+
+
+        checkNotifications(schedules);
+
+
+    },60000);
+
+
+
+    return ()=>clearInterval(timer);
+
+
+
+},[schedules]);
+
+
+
+
+
+
+
+
+    // CREATE SCHEDULE
+
+    async function addSchedule(e){
+
 
         e.preventDefault();
 
-        if (!title || !date || !time) {
+
+
+        if(!title || !date || !time){
+
 
             alert("Please fill all required fields.");
 
             return;
 
+
         }
+
+
+
+
 
         const duplicate = schedules.find(
 
-            (item) =>
+            (item)=>
 
-                item.date === date &&
+                item.date.includes(date) &&
 
-                item.time === time
+                item.time.startsWith(time)
 
         );
 
-        if (duplicate) {
+
+
+        if(duplicate){
+
 
             alert("A schedule already exists for this date and time.");
 
             return;
 
+
         }
+
+
+
+
+
+
 
         const newSchedule = {
 
-            id: Date.now(),
 
             title,
 
@@ -62,85 +162,219 @@ function Scheduling() {
 
             notes,
 
-            important,
+            important
 
-            completed: false
 
         };
 
-        setSchedules([...schedules, newSchedule]);
 
-        setTitle("");
-        setCategory("Health");
-        setDate("");
-        setTime("");
-        setReminder("15");
-        setNotes("");
-        setImportant(false);
 
-    }
 
-    function deleteSchedule(id) {
 
-        setSchedules(
 
-            schedules.filter(
+        try{
 
-                item => item.id !== id
 
-            )
+            await API.post(
 
-        );
+                "/schedules",
 
-    }
+                newSchedule
 
-    function toggleComplete(id) {
+            );
 
-        setSchedules(
 
-            schedules.map(item =>
 
-                item.id === id
+            loadSchedules();
 
-                    ?
 
-                    {
 
-                        ...item,
 
-                        completed: !item.completed
+            setTitle("");
 
-                    }
+            setCategory("Health");
 
-                    :
+            setDate("");
 
-                    item
+            setTime("");
 
-            )
+            setReminder("15");
 
-        );
+            setNotes("");
 
-    }
+            setImportant(false);
 
-    function countdown(scheduleDate, scheduleTime) {
 
-        const target = new Date(`${scheduleDate}T${scheduleTime}`);
-
-        const now = new Date();
-
-        const diff = target - now;
-
-        if (diff <= 0) {
-
-            return "Completed";
 
         }
 
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+
+        catch(error){
+
+
+            console.log(error);
+
+
+            alert(
+
+                error.response?.data?.message ||
+
+                "Failed to save schedule"
+
+            );
+
+
+        }
+
+
+
+    }
+
+
+
+
+
+
+
+
+    // TEMPORARY DELETE (frontend only)
+
+    async function deleteSchedule(id){
+
+
+    try{
+
+
+        await API.delete(
+
+            `/schedules/${id}`
+
+        );
+
+
+        loadSchedules();
+
+
+
+    }
+
+
+    catch(error){
+
+
+        console.log(error);
+
+
+        alert("Delete failed");
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+    // TEMPORARY COMPLETE (frontend only)
+
+    function toggleComplete(id){
+
+
+        setSchedules(
+
+            schedules.map(item=>
+
+                item.id === id
+
+                ?
+
+                {
+
+                    ...item,
+
+                    completed: !item.completed
+
+                }
+
+                :
+
+                item
+
+            )
+
+        );
+
+
+    }
+
+
+
+
+
+
+
+
+
+    // COUNTDOWN
+
+    function countdown(scheduleDate,scheduleTime){
+
+
+
+        const target = new Date(
+
+            `${scheduleDate.split("T")[0]}T${scheduleTime}`
+
+        );
+
+
+
+        const now = new Date();
+
+
+
+        const diff = target - now;
+
+
+
+        if(diff <=0){
+
+
+            return "Completed";
+
+
+        }
+
+
+
+
+
+
+        const days = Math.floor(
+
+            diff /
+
+            (1000 * 60 * 60 * 24)
+
+        );
+
+
+
+
 
         const hours = Math.floor(
 
-            (diff % (1000 * 60 * 60 * 24))
+            (diff %
+
+            (1000 * 60 * 60 * 24))
 
             /
 
@@ -148,9 +382,15 @@ function Scheduling() {
 
         );
 
+
+
+
+
         const minutes = Math.floor(
 
-            (diff % (1000 * 60 * 60))
+            (diff %
+
+            (1000 * 60 * 60))
 
             /
 
@@ -158,23 +398,52 @@ function Scheduling() {
 
         );
 
-        if (days > 0)
+
+
+
+
+
+        if(days > 0){
 
             return `${days} day(s) left`;
 
-        if (hours > 0)
+        }
+
+
+
+
+
+        if(hours > 0){
 
             return `${hours} hour(s) left`;
 
+        }
+
+
+
+
         return `${minutes} minute(s) left`;
+
+
 
     }
 
-    return (
+
+
+
+
+
+
+
+
+    return(
+
 
         <div className="scheduling-page">
 
+
             <div className="scheduling-content">
+
 
                 <h1>
 
@@ -182,56 +451,103 @@ function Scheduling() {
 
                 </h1>
 
+
+
+
+
+
                 <ScheduleForm
 
+
                     title={title}
+
                     setTitle={setTitle}
 
+
+
                     category={category}
+
                     setCategory={setCategory}
 
+
+
                     date={date}
+
                     setDate={setDate}
 
+
+
                     time={time}
+
                     setTime={setTime}
 
+
+
                     reminder={reminder}
+
                     setReminder={setReminder}
 
+
+
                     notes={notes}
+
                     setNotes={setNotes}
 
+
+
                     important={important}
+
                     setImportant={setImportant}
+
+
 
                     addSchedule={addSchedule}
 
+
                 />
+
+
+
+
+
+
+
+
 
                 <div className="schedule-list">
 
+
+
                     {
 
-                        schedules.map(schedule => (
+                        schedules.map(schedule=>(
 
-                            <div
 
-                                key={schedule.id}
 
-                            >
+                            <div key={schedule.id}>
+
 
                                 <ScheduleCard
 
+
                                     schedule={schedule}
+
 
                                     onDelete={deleteSchedule}
 
+
                                     onComplete={toggleComplete}
+
 
                                 />
 
+
+
+
+
                                 <div className="schedule-info">
+
+
 
                                     <p>
 
@@ -249,44 +565,69 @@ function Scheduling() {
 
                                         }
 
+
                                     </p>
+
+
+
 
                                     <p>
 
-                                        Status :
+                                        Status:
 
                                         {
 
                                             schedule.completed
 
-                                                ?
+                                            ?
 
-                                                " ✅ Completed"
+                                            " ✅ Completed"
 
-                                                :
+                                            :
 
-                                                " 🟣 Upcoming"
+                                            " 🟣 Upcoming"
 
                                         }
 
+
                                     </p>
+
+
 
                                 </div>
 
+
+
                             </div>
+
+
 
                         ))
 
                     }
 
+
+
                 </div>
+
+
+
+
+
 
             </div>
 
+
+
         </div>
+
+
 
     );
 
+
 }
+
+
 
 export default Scheduling;

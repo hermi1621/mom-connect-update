@@ -1,204 +1,137 @@
 import "../styles/profile.css";
-import { useState } from "react";
+
+import { useContext } from "react";
+
+import { AuthContext } from "../context/AuthContext";
+
 import { useNavigate } from "react-router-dom";
 
 
 function Profile(){
 
 
-const navigate = useNavigate();
+    const {user, logout} = useContext(AuthContext);
 
 
+    const navigate = useNavigate();
 
-const avatars=[
 
-"/images/avatars/avatar1.png",
 
-"/images/avatars/avatar2.png",
+    function handleLogout(){
 
-"/images/avatars/avatar3.png"
 
-];
+        logout();
 
 
+        navigate("/login");
 
-const [avatar,setAvatar]=useState(
-    avatars[0]
-);
 
+    }
 
 
-const user = JSON.parse(
-    localStorage.getItem("user")
-);
 
+    if(!user){
 
 
-function logout(){
+        return (
 
+            <h2>
 
-    localStorage.removeItem("user");
+                No user found
 
+            </h2>
 
-    navigate("/signup");
+        );
 
+    }
 
-}
 
 
+    return(
 
 
-return(
+        <div className="profile-page">
 
 
-<div className="profile-page">
+            <div className="profile-card">
 
 
-<h1>
-👤 My Profile
-</h1>
 
+                <img
 
+                src={
 
+                    user.avatar
 
+                    ?
 
-{
+                    user.avatar
 
-user ?
+                    :
 
-(
+                    "/images/default-avatar.png"
 
-<div className="profile-card">
+                }
 
+                className="profile-avatar"
 
-<img
+                />
 
-src={avatar}
 
-alt="profile"
 
-/>
+                <h1>
 
+                    Welcome {user.name} 💜
 
+                </h1>
 
-<h2>
-{user.name}
-</h2>
 
 
 
-<p>
-{user.email}
-</p>
+                <p>
 
+                    📧 {user.email}
 
+                </p>
 
-<p>
-🇪🇹 Ethiopia
-</p>
 
 
+                <p>
 
+                    📱 {user.phone || "No phone"}
 
+                </p>
 
-<div className="avatar-options">
 
 
-{
+                <p>
 
-avatars.map((item,index)=>(
+                    🌍 {user.country || "No country"}
 
+                </p>
 
-<img
 
-key={index}
 
-src={item}
 
-onClick={()=>setAvatar(item)}
+                <button
 
-/>
+                onClick={handleLogout}
 
+                >
 
-))
+                    Logout
 
-}
+                </button>
 
 
 
-</div>
+            </div>
 
 
+        </div>
 
-<button
 
-className="logout"
-
-onClick={logout}
-
->
-
-Logout
-
-</button>
-
-
-
-</div>
-
-)
-
-
-
-:
-
-(
-
-
-<div className="not-login">
-
-
-<h2>
-You are not logged in
-</h2>
-
-
-<p>
-Please create an account to continue.
-</p>
-
-
-
-<button
-
-onClick={()=>
-navigate("/signup")
-}
-
->
-
-Go To Signup
-
-</button>
-
-
-</div>
-
-
-)
-
-
-}
-
-
-
-
-
-</div>
-
-
-);
-
+    );
 
 }
 
