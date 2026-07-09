@@ -8,7 +8,6 @@ const reviews = [
         role:"New Mother",
         message:
         "Moms Connect helped me organize my daily routine and become more confident.",
-        image:"/images/mothers/mother1.jpg"
     },
 
     {
@@ -16,7 +15,6 @@ const reviews = [
         role:"Working Mother",
         message:
         "The habit tracking and scheduling features changed the way I manage my time.",
-        image:"/images/mothers/mother2.jpg"
     },
 
     {
@@ -24,7 +22,6 @@ const reviews = [
         role:"Mother & Entrepreneur",
         message:
         "I love the expert support and the peaceful journaling experience.",
-        image:"/images/mothers/mother3.jpg"
     }
 
 ];
@@ -87,10 +84,7 @@ function Testimonials(){
                             <div className="review-user">
 
 
-                                <img 
-                                src={review.image}
-                                alt={review.name}
-                                />
+                                
 
 
                                 <div>

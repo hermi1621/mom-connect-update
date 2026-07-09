@@ -42,6 +42,10 @@ function Sidebar(){
                 📅 Scheduling
             </Link>
 
+             
+             <a href="/apps">
+    📱 Apps
+</a>
 
         </div>
 

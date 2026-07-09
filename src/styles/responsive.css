@@ -1,0 +1,57 @@
+/* Mobile Responsive */
+
+@media (max-width: 768px){
+
+
+    .navbar{
+
+        padding:20px;
+
+    }
+
+
+    .nav-links{
+
+        display:none;
+
+    }
+
+
+    .hero{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+
+    .hero-left h1{
+
+        font-size:35px;
+
+    }
+
+
+    .hero-image img{
+
+        width:100%;
+
+    }
+
+
+    .dashboard{
+
+        flex-direction:column;
+
+    }
+
+
+    .sidebar{
+
+        width:100%;
+
+    }
+
+
+}

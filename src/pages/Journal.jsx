@@ -52,8 +52,11 @@ function Journal(){
         e.preventDefault();
 
 
-        if(!title || !content)
+        if(!title || !content){
+
             return;
+
+        }
 
 
 
@@ -100,15 +103,28 @@ function Journal(){
     function deleteJournal(id){
 
 
-        setJournals(
+        const confirmDelete = window.confirm(
 
-            journals.filter(
-
-                item=>item.id !== id
-
-            )
+            "Are you sure you want to delete this journal?"
 
         );
+
+
+        if(confirmDelete){
+
+
+            setJournals(
+
+                journals.filter(
+
+                    item=>item.id !== id
+
+                )
+
+            );
+
+
+        }
 
 
     }
@@ -122,7 +138,9 @@ function Journal(){
 
 
         if(
+
             unlockPassword === selectedJournal.password
+
         ){
 
 
@@ -135,8 +153,11 @@ function Journal(){
                     ?
 
                     {
+
                         ...item,
+
                         locked:false
+
                     }
 
                     :
@@ -157,7 +178,13 @@ function Journal(){
 
         else{
 
-            alert("Incorrect password 🔒");
+
+            alert(
+
+                "Incorrect password 🔒"
+
+            );
+
 
         }
 
@@ -177,8 +204,11 @@ function Journal(){
 
 
             <h1>
+
                 📖 My Journal
+
             </h1>
+
 
 
 
@@ -199,7 +229,9 @@ function Journal(){
                 value={title}
 
                 onChange={
+
                     e=>setTitle(e.target.value)
+
                 }
 
                 />
@@ -213,7 +245,9 @@ function Journal(){
                 value={content}
 
                 onChange={
+
                     e=>setContent(e.target.value)
+
                 }
 
                 />
@@ -229,7 +263,9 @@ function Journal(){
                 value={password}
 
                 onChange={
+
                     e=>setPassword(e.target.value)
+
                 }
 
                 />
@@ -257,7 +293,9 @@ function Journal(){
 
             {
 
+
             journals.map(item=>(
+
 
 
                 <div
@@ -269,7 +307,9 @@ function Journal(){
                 >
 
 
+
                     <h2>
+
 
                     {
 
@@ -285,7 +325,10 @@ function Journal(){
 
                     }
 
+
                     </h2>
+
+
 
 
 
@@ -298,7 +341,9 @@ function Journal(){
 
 
 
+
                     {
+
 
                     item.locked
 
@@ -306,10 +351,15 @@ function Journal(){
 
                     (
 
+                    <>
+
+
                     <button
 
-                    onClick={()=>
-                        setSelectedJournal(item)
+                    onClick={
+
+                        ()=>setSelectedJournal(item)
+
                     }
 
                     >
@@ -317,6 +367,27 @@ function Journal(){
                         Unlock 🔑
 
                     </button>
+
+
+
+
+
+                    <button
+
+                    onClick={
+
+                        ()=>deleteJournal(item.id)
+
+                    }
+
+                    >
+
+                        Delete 🗑️
+
+                    </button>
+
+
+                    </>
 
                     )
 
@@ -326,6 +397,15 @@ function Journal(){
 
                     <>
 
+
+                    <h3>
+
+                        {item.title}
+
+                    </h3>
+
+
+
                     <p>
 
                         {item.content}
@@ -334,17 +414,21 @@ function Journal(){
 
 
 
+
                     <button
 
-                    onClick={()=>
-                        deleteJournal(item.id)
+                    onClick={
+
+                        ()=>deleteJournal(item.id)
+
                     }
 
                     >
 
-                        Delete
+                        Delete 🗑️
 
                     </button>
+
 
                     </>
 
@@ -372,11 +456,14 @@ function Journal(){
 
 
 
+
             {
+
 
             selectedJournal &&
 
             (
+
 
             <div className="unlock-box">
 
@@ -384,9 +471,14 @@ function Journal(){
                 <div className="unlock-card">
 
 
+
                     <h2>
+
                         🔐 Unlock Journal
+
                     </h2>
+
+
 
 
                     <input
@@ -398,10 +490,15 @@ function Journal(){
                     value={unlockPassword}
 
                     onChange={
+
                         e=>setUnlockPassword(e.target.value)
+
                     }
 
                     />
+
+
+
 
 
                     <button
@@ -415,11 +512,19 @@ function Journal(){
                     </button>
 
 
+
+
+
                     <button
 
                     onClick={()=>{
+
+
                         setSelectedJournal(null);
+
                         setUnlockPassword("");
+
+
                     }}
 
                     >
@@ -429,10 +534,12 @@ function Journal(){
                     </button>
 
 
+
                 </div>
 
 
             </div>
+
 
             )
 

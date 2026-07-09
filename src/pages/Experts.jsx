@@ -8,8 +8,7 @@ const experts=[
         name:"Dr. Sarah Johnson",
         profession:"Psychiatrist",
         experience:"8 Years Experience",
-        price:"$50 / hour",
-        image:"/images/experts/expert1.png"
+        price:"500 birr / hour",
     },
 
 
@@ -17,8 +16,7 @@ const experts=[
         name:"Dr. Maria Wilson",
         profession:"Mother Health Specialist",
         experience:"10 Years Experience",
-        price:"$40 / hour",
-        image:"/images/experts/expert2.png"
+        price:"400 birr/ hour",
     },
 
 
@@ -26,8 +24,7 @@ const experts=[
         name:"Dr. Anna Brown",
         profession:"Family Doctor",
         experience:"7 Years Experience",
-        price:"$45 / hour",
-        image:"/images/experts/expert3.png"
+        price:"450 birr / hour",
     }
 
 ];
@@ -60,7 +57,7 @@ function Experts(){
     function paySession(){
 
         alert(
-            "Payment successful! You can now access your expert session."
+            "use cbe or telebirr"
         );
 
         setSelectedExpert(null);
@@ -108,13 +105,7 @@ function Experts(){
 
 
 
-                    <img
-
-                    src={expert.image}
-
-                    alt={expert.name}
-
-                    />
+                  
 
 
 

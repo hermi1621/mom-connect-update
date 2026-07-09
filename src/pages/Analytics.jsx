@@ -171,7 +171,12 @@ function Analytics(){
 
             </h1>
 
+            
+    <div className="analytics-card">
 
+        {/* your charts and circles here */}
+
+    </div>
 
 
 

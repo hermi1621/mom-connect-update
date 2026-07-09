@@ -1,26 +1,23 @@
 import "../../styles/inspiration.css";
-
 const mothers = [
 
     {
         name:"Wangari Maathai",
         work:"Environmental Activist & Nobel Prize Winner",
         quote:"It’s the little things citizens do. That’s what will make the difference.",
-        image:"/images/wangari.jpg"
+        
     },
 
     {
         name:"Marie Curie",
         work:"Scientist & Nobel Prize Winner",
         quote:"Nothing in life is to be feared, it is only to be understood.",
-        image:"/images/marie.jpg"
     },
 
     {
         name:"Oprah Winfrey",
         work:"Media Entrepreneur & Philanthropist",
         quote:"Think like a queen. A queen is not afraid to fail.",
-        image:"/images/oprah.jpg"
     }
 
 ];
@@ -59,11 +56,10 @@ function Inspiration(){
                         className="mother-card"
                         key={index}
                         >
+                         
 
-                            <img
-                            src={mother.image}
-                            alt={mother.name}
-                            />
+                         
+                            
 
 
                             <h3>

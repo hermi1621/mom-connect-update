@@ -4,6 +4,8 @@ import { useState } from "react";
 
 import API from "../services/api";
 
+import { useNavigate } from "react-router-dom";
+
 
 const avatars = [
 
@@ -16,12 +18,18 @@ const avatars = [
 ];
 
 
+
 function Signup(){
+
+
+    const navigate = useNavigate();
 
 
     const [method,setMethod] = useState("");
 
+
     const [avatar,setAvatar] = useState("");
+
 
     const [name,setName] = useState("");
 
@@ -37,6 +45,8 @@ function Signup(){
 
 
 
+
+
     async function handleSignup(e){
 
 
@@ -46,11 +56,14 @@ function Signup(){
 
         if(password !== confirmPassword){
 
+
             alert("Passwords do not match");
 
             return;
 
+
         }
+
 
 
 
@@ -88,15 +101,18 @@ function Signup(){
             alert("Signup successful");
 
 
+            navigate("/login");
+
+
 
         }
+
 
 
         catch(error){
 
 
             console.log(error);
-
 
 
             alert(
@@ -115,6 +131,10 @@ function Signup(){
 
 
 
+
+
+
+
     return(
 
 
@@ -124,6 +144,7 @@ function Signup(){
             <div className="signup-box">
 
 
+
                 <h1>
 
                     Create Your Account 💜
@@ -131,11 +152,15 @@ function Signup(){
                 </h1>
 
 
+
                 <p>
 
                     Start your journey with Moms Connect
 
                 </p>
+
+
+
 
 
 
@@ -159,6 +184,8 @@ function Signup(){
 
 
 
+
+
                         <button
 
                         onClick={()=>setMethod("phone")}
@@ -168,6 +195,7 @@ function Signup(){
                             📱 Sign up with Phone
 
                         </button>
+
 
 
                     </div>
@@ -180,12 +208,18 @@ function Signup(){
 
 
 
+
+
+
                 {
 
                 method && (
 
 
+
                 <form onSubmit={handleSignup}>
+
+
 
 
                     <input
@@ -194,7 +228,11 @@ function Signup(){
 
                     value={name}
 
-                    onChange={(e)=>setName(e.target.value)}
+                    onChange={
+
+                        e=>setName(e.target.value)
+
+                    }
 
                     required
 
@@ -203,7 +241,11 @@ function Signup(){
 
 
 
+
+
+
                     {
+
                     method==="email" &&
 
                     <input
@@ -214,7 +256,13 @@ function Signup(){
 
                     value={email}
 
-                    onChange={(e)=>setEmail(e.target.value)}
+                    onChange={
+
+                        e=>setEmail(e.target.value)
+
+                    }
+
+                    autoComplete="new-email"
 
                     required
 
@@ -225,7 +273,11 @@ function Signup(){
 
 
 
+
+
+
                     {
+
                     method==="phone" &&
 
                     <input
@@ -234,7 +286,11 @@ function Signup(){
 
                     value={phone}
 
-                    onChange={(e)=>setPhone(e.target.value)}
+                    onChange={
+
+                        e=>setPhone(e.target.value)
+
+                    }
 
                     required
 
@@ -245,8 +301,14 @@ function Signup(){
 
 
 
+
+
+
+
                     {
+
                     method==="email" &&
+
 
 
                     <input
@@ -255,7 +317,11 @@ function Signup(){
 
                     value={phone}
 
-                    onChange={(e)=>setPhone(e.target.value)}
+                    onChange={
+
+                        e=>setPhone(e.target.value)
+
+                    }
 
                     />
 
@@ -266,8 +332,13 @@ function Signup(){
 
 
 
+
+
+
                     {
+
                     method==="phone" &&
+
 
 
                     <input
@@ -276,7 +347,11 @@ function Signup(){
 
                     value={email}
 
-                    onChange={(e)=>setEmail(e.target.value)}
+                    onChange={
+
+                        e=>setEmail(e.target.value)
+
+                    }
 
                     />
 
@@ -286,21 +361,33 @@ function Signup(){
 
 
 
+
+
+
+
                     <select
 
                     value={country}
 
-                    onChange={(e)=>setCountry(e.target.value)}
+                    onChange={
+
+                        e=>setCountry(e.target.value)
+
+                    }
 
                     required
 
                     >
 
+
                         <option value="">
+
 
                             Select Country
 
+
                         </option>
+
 
 
                         <option>
@@ -310,11 +397,14 @@ function Signup(){
                         </option>
 
 
+
                         <option>
 
                             United States
 
                         </option>
+
+
 
 
                         <option>
@@ -324,7 +414,12 @@ function Signup(){
                         </option>
 
 
+
                     </select>
+
+
+
+
 
 
 
@@ -338,11 +433,19 @@ function Signup(){
 
                     value={password}
 
-                    onChange={(e)=>setPassword(e.target.value)}
+                    onChange={
+
+                        e=>setPassword(e.target.value)
+
+                    }
+
+                    autoComplete="new-password"
 
                     required
 
                     />
+
+
 
 
 
@@ -356,11 +459,20 @@ function Signup(){
 
                     value={confirmPassword}
 
-                    onChange={(e)=>setConfirmPassword(e.target.value)}
+                    onChange={
+
+                        e=>setConfirmPassword(e.target.value)
+
+                    }
 
                     required
 
                     />
+
+
+
+
+
 
 
 
@@ -375,12 +487,18 @@ function Signup(){
 
 
 
+
+
+
                     <div className="avatars">
+
 
 
                     {
 
+
                     avatars.map((item,index)=>(
+
 
 
                         <img
@@ -392,10 +510,13 @@ function Signup(){
                         src={item}
 
 
+                        alt="avatar"
+
 
                         className={
 
-                            avatar===item
+
+                            avatar === item
 
                             ?
 
@@ -405,11 +526,16 @@ function Signup(){
 
                             ""
 
+
                         }
 
 
 
-                        onClick={()=>setAvatar(item)}
+                        onClick={
+
+                            ()=>setAvatar(item)
+
+                        }
 
 
 
@@ -417,6 +543,7 @@ function Signup(){
 
 
                     ))
+
 
                     }
 
@@ -428,11 +555,19 @@ function Signup(){
 
 
 
-                    <button>
+
+
+
+
+                    <button type="submit">
+
 
                         Create Account
 
+
                     </button>
+
+
 
 
 
@@ -455,6 +590,7 @@ function Signup(){
 
 
 }
+
 
 
 export default Signup;

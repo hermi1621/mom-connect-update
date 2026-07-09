@@ -1,50 +1,71 @@
+import { useNavigate } from "react-router-dom";
 import "../../styles/navbar.css";
-import { FaHeart } from "react-icons/fa";
 
-function Navbar() {
 
-    return (
+function Navbar(){
+
+
+    const navigate = useNavigate();
+
+
+
+    return(
+
 
         <nav className="navbar">
 
+
             <div className="logo">
 
-                <FaHeart className="logo-icon"/>
-
-                <h2>Moms Connect</h2>
+                💜 Moms Connect
 
             </div>
 
-            <ul className="nav-links">
 
-                <li><a href="#">Home</a></li>
 
-                <li><a href="#">Scheduling</a></li>
+            <div className="nav-buttons">
 
-                <li><a href="#">Habit Tracking</a></li>
 
-                <li><a href="#">Analytics</a></li>
+                <button
 
-                <li><a href="#">Journal</a></li>
+                    className="login-btn"
 
-                <li><a href="#">Apps</a></li>
+                    onClick={()=>navigate("/login")}
 
-                <li><a href="#">Experts</a></li>
+                >
 
-                <li><a href="#">Features</a></li>
+                    Login
 
-            </ul>
+                </button>
 
-            <button className="signup-btn">
 
-                Sign Up
 
-            </button>
+
+                <button
+
+                    className="signup-btn"
+
+                    onClick={()=>navigate("/signup")}
+
+                >
+
+                    Sign Up
+
+                </button>
+
+
+
+            </div>
+
+
 
         </nav>
 
+
     );
 
+
 }
+
 
 export default Navbar;

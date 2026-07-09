@@ -8,12 +8,14 @@ import {
 import { useEffect } from "react";
 
 
+import Home from "./pages/Home";
+
 import DashboardLayout from "./components/layout/DashboardLayout";
 
 
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
+
 
 import Profile from "./pages/Profile";
 import HabitTracking from "./pages/HabitTracking";
@@ -21,10 +23,11 @@ import Journal from "./pages/Journal";
 import Experts from "./pages/Experts";
 import Analytics from "./pages/Analytics";
 import Scheduling from "./pages/Scheduling";
-
+import Apps from "./pages/Apps";
 
 
 function App(){
+
 
 
     useEffect(()=>{
@@ -32,14 +35,14 @@ function App(){
 
         if("Notification" in window){
 
-
             Notification.requestPermission();
-
 
         }
 
 
     },[]);
+
+
 
 
 
@@ -52,7 +55,23 @@ function App(){
             <Routes>
 
 
-                {/* Public Pages */}
+
+                {/* Home */}
+
+
+                <Route
+
+                    path="/"
+
+                    element={<Home/>}
+
+                />
+
+
+
+
+
+                {/* Authentication */}
 
 
                 <Route
@@ -77,7 +96,10 @@ function App(){
 
 
 
-                {/* Dashboard Pages */}
+
+
+                {/* Dashboard Layout */}
+
 
 
                 <Route element={<DashboardLayout/>}>
@@ -87,7 +109,13 @@ function App(){
 
                         path="/dashboard"
 
-                        element={<Dashboard/>}
+                        element={
+
+                            <h1>
+                                Welcome to Moms Connect 💜
+                            </h1>
+
+                        }
 
                     />
 
@@ -151,10 +179,21 @@ function App(){
 
                     />
 
+                    <Route
+    path="/login"
+    element={<Login/>}
+/>
 
                 </Route>
 
 
+                      <Route
+
+    path="/apps"
+
+    element={<Apps/>}
+
+/>
 
             </Routes>
 
@@ -166,7 +205,6 @@ function App(){
 
 
 }
-
 
 
 export default App;

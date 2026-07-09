@@ -36,7 +36,9 @@ function Apps(){
             <h1>
                 📱 Apps Center
             </h1>
-
+ <p>
+                Connect useful apps to improve your daily life.
+            </p>
 
 
             <div className="apps-grid">
