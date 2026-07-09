@@ -1,0 +1,78 @@
+.faq{
+
+    padding:100px 8%;
+
+}
+
+
+.faq-container{
+
+    max-width:850px;
+
+    margin:60px auto;
+
+}
+
+
+
+.faq-item{
+
+    background:white;
+
+    margin-bottom:20px;
+
+    border-radius:20px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+    overflow:hidden;
+
+}
+
+
+
+.faq-item button{
+
+    width:100%;
+
+    padding:25px;
+
+    border:none;
+
+    background:white;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    color:#333;
+
+}
+
+
+
+.faq-item p{
+
+    padding:0 25px 25px;
+
+    color:#666;
+
+    line-height:1.7;
+
+}
+
+
+
+.faq-item span{
+
+    color:#7C3AED;
+
+    font-size:25px;
+
+}

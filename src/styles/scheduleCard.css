@@ -1,0 +1,41 @@
+.schedule-card{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:25px;
+
+    margin-top:20px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    box-shadow:0 8px 25px rgba(124,58,237,.12);
+
+}
+
+.schedule-actions{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+.schedule-actions button{
+
+    padding:10px 18px;
+
+    border:none;
+
+    border-radius:15px;
+
+    cursor:pointer;
+
+}
